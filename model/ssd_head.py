@@ -101,10 +101,10 @@ class SSDHead(nn.Module):
     # Extra layer configurations:
     # (in_ch, mid_ch, out_ch, kernel_size, stride, padding)
     _EXTRA_CONFIG = [
-        (320, 256, 512, 3, 2, 1), # 10x10 -> 5x5
-        (512, 128, 256, 3, 2, 1), # 5x5  -> 3x3
-        (256, 128, 256, 3, 1, 0), # 3x3  -> 1x1 (Stride 1, No Padding)
-        (256, 64,  128, 2, 1, 0), # 1x1  -> 1x1 (Using 2x2 kernel on 2x2 input)
+        (320, 256, 512, 3, 2, 1), # Scale 2: 10x10 -> 5x5
+        (512, 128, 256, 3, 2, 1), # Scale 3: 5x5  -> 3x3
+        (256, 128, 256, 3, 2, 1), # Scale 4: 3x3  -> 2x2
+        (256, 64,  128, 2, 1, 0), # Scale 5: 2x2  -> 1x1 (K=2, S=1, P=0)
     ]
 
     # Channels at each of the 6 prediction scales
