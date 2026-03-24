@@ -236,6 +236,7 @@ class MultiBoxLoss(nn.Module):
 
         print(cls_preds_flat, cls_target_batch.view(-1))
         print(cls_preds_flat.max())
+        print(cls_target_batch.view(-1).max())
         cls_loss_all   = F.cross_entropy(
             cls_preds_flat, cls_target_batch.view(-1), reduction="none"
         ).view(B, N)
