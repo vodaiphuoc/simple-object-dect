@@ -324,7 +324,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--label_offset", type=int,   default=0,
                    help="Add this value to every YOLO class id "
                         "(e.g. 1 if background is class-0 in your pipeline)")
-    p.add_argument("--num_classes",  type=int,   default=2,
+    p.add_argument("--num_classes",  type=int,   default=1,
                    help="Number of classes INCLUDING background")
     p.add_argument("--image_size",   type=int,   default=300)
 

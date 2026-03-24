@@ -233,6 +233,8 @@ class MultiBoxLoss(nn.Module):
 
         # ---- Classification loss with Hard Negative Mining ----
         cls_preds_flat = cls_preds.view(B * N, self.num_classes)
+
+        print(cls_preds_flat, cls_target_batch.view(-1))
         cls_loss_all   = F.cross_entropy(
             cls_preds_flat, cls_target_batch.view(-1), reduction="none"
         ).view(B, N)
