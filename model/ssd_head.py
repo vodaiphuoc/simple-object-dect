@@ -157,7 +157,6 @@ class SSDHead(nn.Module):
         x = feat_s32
         for extra in self.extra_layers:
             x = extra(x)
-            print(x.shape)
             feature_maps.append(x)
 
         loc_list: List[torch.Tensor] = []
