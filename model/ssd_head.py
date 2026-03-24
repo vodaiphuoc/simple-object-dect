@@ -29,13 +29,13 @@ class ExtraConvBlock(nn.Module):
         out_channels: Number of output channels.
     """
 
-    def __init__(self, in_channels, mid_channels, out_channels, stride=2, padding=1):
+    def __init__(self, in_channels, mid_channels, out_channels,  kernel_size = 3, stride=2, padding=1):
         super().__init__()
         self.conv = nn.Sequential(
             nn.Conv2d(in_channels, mid_channels, kernel_size=1, bias=False),
             nn.BatchNorm2d(mid_channels),
             nn.ReLU6(inplace=True),
-            nn.Conv2d(mid_channels, out_channels, kernel_size=3, 
+            nn.Conv2d(mid_channels, out_channels, kernel_size=kernel_size, 
                       stride=stride, padding=padding, bias=False),
             nn.BatchNorm2d(out_channels),
             nn.ReLU6(inplace=True),
@@ -99,12 +99,12 @@ class SSDHead(nn.Module):
     """
 
     # Extra layer configurations:
-    # (in_ch, mid_ch, out_ch, stride, padding)
+    # (in_ch, mid_ch, out_ch, kernel_size, stride, padding)
     _EXTRA_CONFIG = [
-        (320, 256, 512, 2, 1), # 10x10 -> 5x5
-        (512, 128, 256, 2, 1), # 5x5  -> 3x3
-        (256, 128, 256, 2, 1), # 3x3  -> 2x2
-        (256, 64,  128, 2, 0), # 2x2  -> 1x1 (Note: Padding 0)
+        (320, 256, 512, 3, 2, 1), # 10x10 -> 5x5
+        (512, 128, 256, 3, 2, 1), # 5x5  -> 3x3
+        (256, 128, 256, 3, 1, 0), # 3x3  -> 1x1 (Stride 1, No Padding)
+        (256, 64,  128, 2, 1, 0), # 1x1  -> 1x1 (Using 2x2 kernel on 2x2 input)
     ]
 
     # Channels at each of the 6 prediction scales
@@ -123,8 +123,8 @@ class SSDHead(nn.Module):
 
         # Extra convolutional layers (4 stages, each halves spatial size)
         self.extra_layers = nn.ModuleList([
-            ExtraConvBlock(in_ch, mid_ch, out_ch, stride, padding)
-            for in_ch, mid_ch, out_ch, stride, padding 
+            ExtraConvBlock(in_ch, mid_ch, out_ch,  kernel_size, stride, padding)
+            for in_ch, mid_ch, out_ch, kernel_size, stride, padding 
             in self._EXTRA_CONFIG
         ])
 
