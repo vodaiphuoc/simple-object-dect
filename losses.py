@@ -180,7 +180,7 @@ class MultiBoxLoss(nn.Module):
         loc_targets = encode_boxes(matched_gt_cxcywh, anchors_cxcywh, self.variances)
         # Zero out loc targets for negatives (not used in loss, but cleaner)
         loc_targets[~pos_mask] = 0.0
-
+        print('cls_targets:', cls_targets)
         return loc_targets, cls_targets
 
     # ------------------------------------------------------------------
