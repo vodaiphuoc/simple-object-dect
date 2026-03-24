@@ -1,13 +1,3 @@
-"""
-SSD Anchor (Default Box) Generator.
-
-Generates default boxes for each feature map scale following the SSD paper:
-  "SSD: Single Shot MultiBox Detector"
-  Liu et al., 2015 (https://arxiv.org/abs/1512.02325)
-
-The generator produces anchors in (cx, cy, w, h) normalized format
-(values in [0, 1] relative to the input image size).
-"""
 
 import math
 import torch
@@ -16,12 +6,6 @@ from typing import List, Tuple
 
 class AnchorGenerator(torch.nn.Module):
     """
-    Generates SSD default boxes (anchors) for a fixed set of feature maps.
-
-    For each feature map cell we generate k anchors, where k = len(aspect_ratios)
-    + (1 if add_extra_scale else 0), i.e. one anchor per aspect ratio and one
-    additional square anchor at the geometric mean scale.
-
     Args:
         image_size:    Input image side length (assumes square input).
         feature_maps:  List of (height, width) for each feature map level.
@@ -130,11 +114,3 @@ class AnchorGenerator(torch.nn.Module):
     def total_anchors(self) -> int:
         """Total number of anchors across all feature maps."""
         return self.anchors.shape[0]
-
-
-if __name__ == "__main__":
-    gen = AnchorGenerator()
-    print(f"Total anchors: {gen.total_anchors}")
-    print(f"Anchors per location: {gen.num_anchors_per_location}")
-    print(f"Anchors shape: {gen.anchors.shape}")
-    print(f"Sample anchor: {gen.anchors[0]}")

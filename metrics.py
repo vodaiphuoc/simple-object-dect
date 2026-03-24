@@ -1,16 +1,3 @@
-"""
-Detection Metrics: IoU and Mean Average Precision (mAP).
-
-Implements:
-  - compute_iou: pairwise Intersection-over-Union between box sets
-  - MeanAveragePrecision: Pascal VOC-style mAP at IoU=0.5
-
-Usage:
-    metric = MeanAveragePrecision(num_classes=2, iou_threshold=0.5)
-    metric.update(predictions, targets)   # per batch
-    results = metric.compute()            # at epoch end
-    metric.reset()
-"""
 
 import torch
 from typing import List, Dict, Tuple

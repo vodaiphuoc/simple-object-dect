@@ -1,16 +1,3 @@
-"""
-MultiBox Loss for SSD object detection.
-
-Implements the combined localization + classification loss from:
-  "SSD: Single Shot MultiBox Detector" — Liu et al., 2015
-
-Key components:
-  1. Anchor-to-ground-truth matching via IoU threshold
-  2. Smooth L1 localization loss on positive anchors
-  3. Softmax cross-entropy classification loss with Hard Negative Mining
-     (keeps negative:positive ratio ≤ neg_pos_ratio:1)
-"""
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -107,11 +94,6 @@ def decode_boxes(
 
 class MultiBoxLoss(nn.Module):
     """
-    SSD MultiBox Loss = Localization Loss + α × Classification Loss.
-
-    Localization loss: Smooth L1 on positive-matched anchors.
-    Classification loss: Cross-entropy with hard negative mining.
-
     Args:
         num_classes:    Total number of classes (including background at index 0).
         iou_threshold:  IoU threshold for positive anchor matching.
@@ -152,6 +134,7 @@ class MultiBoxLoss(nn.Module):
             loc_targets: (N, 4)  encoded offsets (zero for unmatched)
             cls_targets: (N,)    class index per anchor; 0 = background
         """
+        print('gt_labels: ',gt_labels)
         N = anchors_cxcywh.size(0)
         anchors_xyxy = cxcywh_to_xyxy(anchors_cxcywh)
 

@@ -1,15 +1,3 @@
-"""
-MobileNetV2 backbone implemented from scratch in PyTorch.
-
-Architecture follows the original paper:
-  "MobileNetV2: Inverted Residuals and Linear Bottlenecks"
-  Sandler et al., 2018 (https://arxiv.org/abs/1801.04381)
-
-No torchvision model imports are used.
-The backbone exposes two intermediate feature maps at stride 16 and stride 32,
-which are fed into the SSD detection head.
-"""
-
 import torch
 import torch.nn as nn
 from typing import Tuple, List

@@ -1,17 +1,3 @@
-"""
-Full MobileNetV2-SSD Object Detection Model.
-
-Combines:
-  - MobileNetV2 backbone (mobilenetv2.py)
-  - SSD multi-scale prediction head (ssd_head.py)
-  - Default box / anchor generator (anchors.py)
-
-Usage:
-    model = MobileNetV2SSD(num_classes=2)  # background + car
-    loc, cls, anchors = model(images)       # training mode
-    detections = model.predict(images)      # inference with NMS
-"""
-
 import torch
 import torch.nn as nn
 import torchvision.ops as ops   # only ops (nms/boxes), not model imports
@@ -204,17 +190,3 @@ class MobileNetV2SSD(nn.Module):
             })
 
         return results
-
-
-# if __name__ == "__main__":
-#     model = MobileNetV2SSD(num_classes=2)
-#     dummy = torch.randn(2, 3, 300, 300)
-#     loc, cls, anchors = model(dummy)
-#     print(f"loc_preds : {loc.shape}")      # (2, N, 4)
-#     print(f"cls_preds : {cls.shape}")      # (2, N, 2)
-#     print(f"anchors   : {anchors.shape}")  # (N, 4)
-#     print(f"Total anchors: {anchors.shape[0]}")
-
-#     detections = model.predict(dummy)
-#     for i, det in enumerate(detections):
-#         print(f"Image {i}: {det['boxes'].shape[0]} detections")

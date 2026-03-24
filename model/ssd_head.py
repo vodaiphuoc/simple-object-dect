@@ -1,16 +1,3 @@
-"""
-SSD Detection Head.
-
-Implements extra convolutional layers and per-scale prediction heads
-as described in:
-  "SSD: Single Shot MultiBox Detector"
-  Liu et al., 2015 (https://arxiv.org/abs/1512.02325)
-
-The head takes two backbone feature maps (stride 16, stride 32) and
-appends four extra feature maps produced by strided convolutions,
-giving a total of six prediction scales.
-"""
-
 import torch
 import torch.nn as nn
 from typing import Tuple, List
